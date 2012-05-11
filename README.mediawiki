@@ -1,0 +1,15 @@
+== Overview ==
+An event driven module written using NodeJS & PHP that can be used for live monitoring of any UNIX command like tail.
+
+== Server ==
+=== Dependencies ===
+* npm install websocket
+
+== Client == 
+=== PHP & JS ===
+
+== Demo ==
+* TODO
+
+== Contact ==
+Raise a issue against this repository. 

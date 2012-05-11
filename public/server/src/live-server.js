@@ -54,11 +54,11 @@ wsServer.on('connect', function (connection) {
         if (message.type === 'utf8') {
             debugLiveServer("Received utf-8 message of " + message.utf8Data.length + " characters.");
             debugLiveServer("Client sent [" + message.utf8Data + "]");
-       
+
             var raw_json = JSON.parse(message.utf8Data);
-			handleClientRequest(connection, raw_json);
-			
-			clientID++;
+            handleClientRequest(connection, raw_json);
+
+            clientID++;
         } else if (message.type === 'binary') {
             debugLiveServer("Received Binary Message of " + message.binaryData.length + " bytes");
             connection.sendBytes(message.binaryData);
@@ -70,19 +70,19 @@ wsServer.on('connect', function (connection) {
     });
 });
 
-function handleClientRequest(connection, client_json){
-	debugLiveServer("Client[" + clientID + "] request type[" + client_json.t + "]");
-	
-	var client_request = spawn("/usr/bin/tail", ["-f", client_json.d]);
-    
+function handleClientRequest(connection, client_json) {
+    debugLiveServer("Client[" + clientID + "] request type[" + client_json.t + "]");
+
+    var client_request = spawn("/usr/bin/tail", ["-f", client_json.d]);
+
     client_request.stdout.on('data', function (data) {
         connection.sendUTF(data);
-        debugLiveServer('client[' + clientID + '] stdout::' + data);
+        debugLiveServer('Client[' + clientID + '] stdout::' + data);
     });
 
     client_request.stderr.on('data', function (data) {
         connection.sendUTF(data);
-        debugLiveServer('client[' + clientID + '] stderr: ' + data);
+        debugLiveServer('Client[' + clientID + '] stderr: ' + data);
     });
 }
 
